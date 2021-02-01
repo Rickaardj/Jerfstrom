@@ -137,7 +137,7 @@ function TwitterStream(params) {
 			// 	}
 			// }); 
 
-			console.log('test');
+			console.log('mordin');
 
 		});
 
