@@ -6,7 +6,7 @@ Make sure you have [Node.js](http://nodejs.org/) and the [Heroku CLI](https://cl
 
 ```sh
 $ git clone https://github.com/Rickaardj/Jerfstrom.git # or clone your own fork
-$ cd Jerfstromn
+$ cd Jerfstrom
 $ npm install
 $ npm start
 ```
