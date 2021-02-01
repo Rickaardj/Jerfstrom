@@ -137,6 +137,7 @@ function TwitterStream(params) {
 			// 	}
 			// }); 
 
+			console.log('test');
 
 		});
 
