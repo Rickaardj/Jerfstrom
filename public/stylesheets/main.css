@@ -1,0 +1,139 @@
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+html, body {
+	margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+body {
+	position: absolute;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto!important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+a:hover {text-decoration: none;}
+
+.section {
+	box-sizing: border-box;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+/* HEADER */
+.navbar {margin-bottom: 0; background-color: #fff;}
+.navbar-container {
+	background-color: #eeee;
+}
+.navbar .hem a {
+	padding: 10px;
+    display: inline-block;
+}
+.logo {
+	display: flex;
+    justify-content: center;
+	margin: 15px 0;
+}
+.logo img {height: 85px;}
+.navbar-container {background-color: #000000;}
+.meny {display: flex;}
+.meny a {
+	font-size: 18px; 
+	padding: 10px 25px;
+	color: #ffffff;
+}
+
+.meny a:hover {background-color: #2f2f2f;}
+
+/* Twitter FEED */
+#stream-container {min-height: 600px;}
+.containerMain {/*background-color: #1da1f2;*/ background-color: #444444;}
+.tweet-container {
+	display: flex;
+	background-color: #fff;
+    margin: 20px 0;
+    padding: 25px;
+	border-radius: 45px;
+	width: 100%;
+}
+.tweet-img {
+	width: 7%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #eee;
+	border-radius: 50%;
+	min-height: 80px;
+}
+.tweet-img img {max-height: 50px;}
+.tweet-container-inner {
+	width: 80%;
+	display: flex;
+    flex-direction: column;
+	flex-wrap: wrap;
+	margin-left: 15px;
+}
+
+.tweet-name{font-weight: 600; font-size: 22px;}
+.tweet-timestamp {font-weight: 500;}
+.tweet-checkbox {
+	width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    border: 2px solid #000;
+    margin: auto;
+}
+.tweet-checkbox i {
+	font-size: 50px;
+}
+.tweet-checkbox.false {
+	background-color: #ff0808;
+}
+.tweet-checkbox.true {
+	background-color: #20c520;
+}
+.tweet-checkbox.true i::before {
+	content: "\f00c";
+}
+/* ERROR TEXT */
+.opsie_text {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 70px 0 70px;
+	padding: 10px;
+	color: #ffffff;
+	font-size: 22px;
+}
+/* FOOTER */
+.footer {
+	width: 100%;
+	background-color: #222222;
+	color: #ffffff;
+}
+.footerMain {
+	height: 100%;
+    padding: 15px;
+    min-height: 140px;
+}
+.footerDiv {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.footerDiv img {
+	filter: invert(1);
+}
+.footer-nedre {
+	display: flex;
+	justify-content: center;
+	padding: 20px;
+}
+
+
