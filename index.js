@@ -122,7 +122,7 @@ function TwitterStream(params) {
 			console.log(sparad);
 			if (sparad == 0) {
 				console.log(sparad+ 'i ifsats');
-				// tweetN.save()
+				tweetN.save()
 				sparad = 1;
 			}else{
 				console.log(sparad+ 'elsen');
