@@ -141,6 +141,7 @@ function TwitterStream(params) {
 
 		});
 
+		
 		stream.on('error', function (error) {
 			socket.emit('error', {
 				data: error
