@@ -26,7 +26,6 @@ mongoose.connect(dbURI, {
 	.catch((err) => console.log(err));
 
 require('./db/db')
-const db = require('./db/tweets.controller')
 
 app.get('/', (req, res) => {
 	// console.log('Laddar sida');
@@ -129,10 +128,6 @@ function TwitterStream(params) {
 			}
 
 		});
-
-
-
-
 		stream.on('error', function (error) {
 			socket.emit('error', {
 				data: error
