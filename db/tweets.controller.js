@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Tweet = mongoose.model('Tweet')
-const helpers = require('../helpers');
 
 const fetchTweets = function () {
 	return Tweet.find({})

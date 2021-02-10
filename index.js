@@ -59,8 +59,7 @@ function TwitterStream(params) {
 		// bearer_token: process.env.TWITTER_BEARER_TOKEN
 	});
 
-	var deandra = '761052883076861952,716344220,1146869628959952901';
-	var usersAttFolja = '1158572066';
+	var usersAttFolja = '1158572066,761052883076861952,716344220,1146869628959952901';
 	var stream = client.stream('statuses/filter', {
 		follow: usersAttFolja
 	})
