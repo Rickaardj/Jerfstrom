@@ -1,7 +1,7 @@
 {
-  "name": "node-js-getting-started",
+  "name": "Jerfstrom",
   "version": "0.3.0",
-  "description": "A sample Node.js app using Express 4",
+  "description": "Jerfstrom twitter stream",
   "engines": {
     "node": "14.x"
   },

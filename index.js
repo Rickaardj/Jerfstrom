@@ -22,9 +22,11 @@ mongoose.connect(dbURI, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true
 	})
-	.then((result) => server.listen(PORT, TwitterStream() , console.log('starting database'), console.log(' ')))
+	.then((result) => server.listen(PORT, TwitterStream()))
 	.catch((err) => console.log(err));
 
+require('./db/db')
+const db = require('./db/tweets.controller')
 
 app.get('/', (req, res) => {
 	// console.log('Laddar sida');
@@ -70,11 +72,12 @@ function TwitterStream(params) {
 	var tweet_text = "";
 	var retweet_text = "";
 	var tweet_img = "";
+	var id_string = "";
 
 	var sparad = 0;
 
 	io.on('connection', function (socket) {
-		
+
 		stream.on('tweet', function (tweet) { //tweet är JSON objektet som v hämtar med API't
 			tweet_timestamp = tweet.created_at;
 			tweet_name = tweet.user.screen_name;
@@ -90,8 +93,10 @@ function TwitterStream(params) {
 				tweet_text = tweet.extended_tweet.full_text;
 			}
 			tweet_img = tweet.user.profile_image_url_https;
+			id_string = tweet.id_str;
 			// console.log('Nu kom de en tweet från '+ tweet_name);
 			const tweetN = new Tweet({
+				id_str: id_string,
 				screen_name: tweet_name,
 				userimage: tweet_img,
 				text: tweet_text,
@@ -106,19 +111,15 @@ function TwitterStream(params) {
 			})
 
 			// TODO: KOLL EMOT DATABSEN ANNARS FUNKAR FAN INTE SKITEN SOM DEN SKA.
+			// console.log(tweet);
+
+
+
+			// db.getUniqueTweets(tweet.statuses).then((tweets) => {
+			//   db.recordUniqueTweets(tweets)
+			// })
+
 			
-			// 	.then(() => {
-			// 		console.log('databasen koppling stängd');
-			// 		return conn.close();
-			// 	});
-
-			// Tweet.findOne({ text: tweetN.tweet_text, screen_name: tweetN.tweet_name }).select("text").lean().then(result => {
-			// 	if (result) {
-					
-			// 	}
-			// });
-			console.log(tweetN);
-
 			console.log(sparad);
 			if (sparad == 0) {
 				console.log(sparad+ 'i ifsats');
@@ -126,23 +127,12 @@ function TwitterStream(params) {
 				sparad = 1;
 			}else{
 				console.log(sparad+ 'elsen');
-				sparad = 0;
 			}
-
-			// Tweet.find({screen_name: tweet_name,text: tweet_text, timestamp: tweet_timestamp}).count(function (err, count){ 
-			// 	if(count>0){
-			// 		//document exists });
-			// 	}else{
-			// 		tweetN.save()
-			// 	}
-			// }); 
-
-			console.log('mordin');
 
 		});
 
 
-		
+
 
 		stream.on('error', function (error) {
 			socket.emit('error', {

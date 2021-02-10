@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const tweetSchema = new schema({
+	id_str: {
+		type: String,
+		required: false,
+		unique: [true, "får bara finnas en tweet med samma id"]
+	},
 	screen_name: {
 		type: String,
 		required: true
