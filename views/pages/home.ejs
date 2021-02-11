@@ -9,25 +9,26 @@
 	<%- include ("../partials/nav.ejs") %>
 	<div class="containerMain col-xs-12">
 		<div class="error-fied">
-			
+
 		</div>
 		<div id="stream-container" class="col-xs-12">
 			<% if (tweets.length > 0) { %>
 			<% tweets.forEach( tweet => { %>
-			<div class="tweet-container">
-				
+			<div class="tweet-container" action="/tweet-id" method="POST">
 				<div class="tweet-img"><img src="<%= tweet.userimage %>" alt="twitter profilbild"></div>
 				<div class="tweet-container-inner">
-					<a  target="_blank" rel="noopener noreferrer" href="https://twitter.com/<%= tweet.screen_name %>">
+					<div style="display: none;" class="tweet-id" name="tweet_id"><%= tweet.id_str %></div>
+					<a target="_blank" rel="noopener noreferrer" href="https://twitter.com/<%= tweet.screen_name %>">
 						<div class="tweet-name"><%= tweet.screen_name %></div>
 						<div class="tweet-text"><%= tweet.text %></div>
 						<div class="retweet-text"><%= tweet.retweet_text %></div>
 						<div class="tweet-timestamp"><%= tweet.timestamp %> </div>
 					</a>
 				</div>
-				<div class="tweet-checkbox <%= tweet.checkbox %>">
+				<div name="checkbox" checkbox_id="<%= tweet._id %>" checkbox_status="<%= tweet.checkbox %>" class="tweet-checkbox <%= tweet.checkbox %>">
 					<i class="fas fa-times"></i>
 				</div>
+				<a class="trashcan mask" tweet_id="<%= tweet._id %>"><i class="far fa-trash-alt trashcanicon"></i><span class="usure">Ta bort?</span></a>
 			</div>
 			<% }) %>
 			<% } else { %>
@@ -37,5 +38,6 @@
 	</div>
 </body>
 <%- include ("../partials/footer.ejs") %>
+
 
 </html>

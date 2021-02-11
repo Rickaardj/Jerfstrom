@@ -5,7 +5,8 @@ const tweetSchema = new schema({
 	id_str: {
 		type: String,
 		required: false,
-		unique: [true, "får bara finnas en tweet med samma id"]
+		unique: [true, "får bara finnas en tweet med samma id"],
+		sparse: true
 	},
 	screen_name: {
 		type: String,
@@ -24,7 +25,7 @@ const tweetSchema = new schema({
 		required: true
 	},
 	checkbox: {
-		type: Boolean,
+		type: String,
 		required: false
 	},
 	retweet_text: {

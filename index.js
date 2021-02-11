@@ -13,6 +13,7 @@ var io = require('socket.io')(server);
 //Twitter
 var Twitter = require('twit');
 var request = require("request");
+const { assert } = require('console');
 
 //connection to mongodb
 const dbURI = process.env.DB_CONNECTION;
@@ -58,7 +59,7 @@ function TwitterStream(params) {
 		// bearer_token: process.env.TWITTER_BEARER_TOKEN
 	});
 
-	var usersAttFolja = '1158572066,761052883076861952,716344220,1146869628959952901';
+	var usersAttFolja = '1158572066,761052883076861952,716344220,1146869628959952901,754729466';
 	var stream = client.stream('statuses/filter', {
 		follow: usersAttFolja
 	})
@@ -102,32 +103,21 @@ function TwitterStream(params) {
 				checkbox: false,
 				retweet_text: retweet_text
 			});
+			console.log(sparad);
+			if (sparad == 0) {
 
+				tweetN.save(function (err) {
+					if (err) return console.log(err);
+					sparad = 1;
+				  });
+				
+			} else {
 
+				sparad = 0;
+			}
 			socket.emit('livetweets', {
 				data: tweetN
 			})
-
-			// TODO: KOLL EMOT DATABSEN ANNARS FUNKAR FAN INTE SKITEN SOM DEN SKA.
-			// console.log(tweet);
-
-
-
-			// db.getUniqueTweets(tweet.statuses).then((tweets) => {
-			//   db.recordUniqueTweets(tweets)
-			// })
-
-			
-			console.log(sparad);
-			if (sparad == 0) {
-				
-				tweetN.save()
-				sparad = 1;
-			}else{
-				
-				sparad = 0;
-			}
-
 		});
 		stream.on('error', function (error) {
 			socket.emit('error', {
@@ -138,109 +128,28 @@ function TwitterStream(params) {
 	});
 }
 
+app.post('/tweet-updatecheckbox/:id/:status', (req, res) => {
+	const id = req.params.id;
+	const status = req.params.status;
+	console.log(id, status);
+	Tweet.findByIdAndUpdate(id,{checkbox:status})
+		.then(result => {
+			res.json({ redirect: '/'});
+		})
+		.catch(err => console.log(err));
 
+});
 
-// io.on('connection', function (socket) {
+app.delete('/tweet-tabort/:id', (req, res) => {
+	const id = req.params.id;
+	console.log(id);
+	Tweet.findByIdAndDelete(id)
+		.then(result => {
+			res.json({ redirect: '/'});
+		})
+		.catch(err => console.log(err));
 
-// 	socket.emit('welcome', { data: 'welcome' });
-// 	socket.on('keyword' , function(data){
-// 		console.log(data);
-// 		var keyword = data.keyword;
-// 		var stream = client.stream('statuses/filter', {track: keyword});
-// 		stream.on('data', function(event) {
-
-// 							socket.emit('livetweets' , { data : content })
-// 							console.log('tweet');
-// 				// 	}
-// 				// });
-// 				//releasing connection
-// 				// socket.on('stop' , function(data){
-// 				// 	connection.release();
-// 				// });
-
-// 			// });
-
-// 		});
-
-// 		stream.on('error', function(error) {
-// 			throw error;
-// 		});	  
-// 	});
-// });
-
-
-//Nyast
-// io.on('connect', function (socket) {
-
-// 	var stream = T.stream('statuses/filter', {
-// 		follow: usersAttFolja
-// 	})
-// 	console.log('----Stream began-----');
-// 	stream.on('tweetData', function (tweetData) {
-// 		console.log(tweetData);
-// 		io.emit('tweetData', tweetdata);
-// 	})
-// });
-
-// io.on('tweetData', function (tweetData) {
-// 	console.log('fick in en tweet');
-// 	tweet_timestamp = tweetData.created_at;
-// 	tweet_name = tweetData.user.screen_name;
-// 	if (!tweetData.retweeted_status == undefined) {
-// 		if (!tweetData.retweeted_status.extended_tweet == undefined) {
-// 			retweet_text = tweetData.retweeted_status.extended_tweet.full_text;
-// 			tweet_text = retweet_text;
-// 		}
-// 	}
-// 	if (tweetData.extended_tweet == undefined) {
-// 		tweet_text = tweetData.text;
-// 	} else {
-// 		tweet_text = tweetData.extended_tweet.full_text;
-// 	}
-// 	if (!tweetData.user.profile_image_url_https == undefined) {
-// 		tweet_img = tweetData.tweet.user.profile_image_url_https;
-// 	}
-
-// 	const tweet = new Tweet({
-// 		screen_name: tweet_name,
-// 		userimage: tweet_img,
-// 		text: tweet_text,
-// 		timestamp: tweet_timestamp,
-// 		checkbox: false,
-// 		retweet_text: retweet_text
-// 	});
-// 	console.log(tweet);
-// 	console.log(tweetData);
-// });
-
-
-/******** TEST AV DATABAS ************/
-// app.get('/tweets', (req, res) => {
-// 	const tweet = new Tweet({
-// 		screen_name: 'Rickaart',
-// 		userimage: 'https://pbs.twimg.com/profile_images/1251865369943453696/afP0eAzn_400x400.jpg',
-// 		text: 'Tweet nummer 2 som nu är stored på databasen',
-// 		timestamp: '21-01-24 15:03 exempel',
-// 		checkbox: false,
-// 		retweet_text: ''
-// 	});
-
-// 	tweet.save()
-// 		.then((result) => {
-// 			res.send(result)
-// 		})
-// 		.catch((err) => console.log(err));
-// })
-
-// app.get('/get-tweets', (req, res) => {
-// 	Tweet.find()
-// 		.then((result) => {
-// 			res.send(result)
-// 		})
-// 		.catch((err) => console.log(err));
-// });
-/****************************************/
-
+});
 
 // app.post('/search', function (req, res, next) {
 // 	T.get('search/tweets', {

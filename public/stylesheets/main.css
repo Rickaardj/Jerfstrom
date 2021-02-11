@@ -101,6 +101,29 @@ a:hover {text-decoration: none;}
 .tweet-checkbox.true i::before {
 	content: "\f00c";
 }
+
+a.trashcan {
+    color: #000;
+    margin: auto;
+	font-size: 15px;
+	font-weight: 600;
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+a.trashcan i {
+	font-size: 35px;
+	cursor: pointer;
+}
+a.trashcan.mask i {
+	opacity: 0.3;
+	pointer-events: none;
+	cursor: default;
+}
+a.trashcan .usure {
+	cursor: pointer;
+}
+
 /* ERROR TEXT */
 .opsie_text {
 	display: flex;
