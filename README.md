@@ -23,4 +23,4 @@ $ heroku open
 
 ## Documentation
 
-Kom alltid ihåg.. mordin
+
